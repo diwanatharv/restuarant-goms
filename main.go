@@ -33,28 +33,24 @@ func main() {
 	// Create a new Echo instance
 	e := echo.New()
 
-	// // Use the logger middleware
+	// Use the logger middleware
 	e.Use(middleware.Logger())
 
-	// // Set up routes
-	// // Serve the Swagger UI at the base URL
-	// e.GET("/", echoSwagger.WrapHandler)
-
-	// Serve static files from the "static" directory
-	e.Static("/", "static")
-
-	// Set up Swagger route (optional if you have custom index.html)
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	// Set up routes
 	route.SetupUserRoutes(e)
 	authRoutes := e.Group("")
 	authRoutes.Use(middlewares.AuthenticationMiddleware)
-
 	route.SetupFoodRoutes(authRoutes)
 	route.SetupMenuRoutes(authRoutes)
 	route.SetupTableRoutes(authRoutes)
 	route.SetupOrderRoutes(authRoutes)
 	route.SetupOrderItemRoutes(authRoutes)
 	route.SetupInvoiceRoutes(authRoutes)
+
+	// Redirect the base URL to Swagger UI
+	e.GET("/", func(c echo.Context) error {
+		return c.Redirect(301, "/swagger/index.html")
+	})
 
 	// Start the server
 	e.Logger.Fatal(e.Start(":" + port))
