@@ -3,20 +3,29 @@ package controller
 import (
 	"context"
 	"fmt"
-	"github.com/labstack/echo/v4"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"management/database"
 	"management/model"
 	"net/http"
 	"time"
+
+	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var menuCollection *mongo.Collection = database.OpenCollection(database.Client, "menu")
 
+// GetMenus
+// @Summary List menus
+// @Description Get all menus
+// @Tags menus
+// @Produce json
+// @Success 200 {array} model.Menu
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /menus [get]
 func GetMenus(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	result, err := menuCollection.Find(context.TODO(), bson.M{})
@@ -31,6 +40,15 @@ func GetMenus(c echo.Context) error {
 	return c.JSON(http.StatusOK, allMenus)
 }
 
+// GetMenu
+// @Summary Get menu
+// @Description Get a menu by ID
+// @Tags menus
+// @Produce json
+// @Param menu_id path string true "Menu ID"
+// @Success 200 {object} model.Menu
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /menus/{menu_id} [get]
 func GetMenu(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	menuId := c.Param("menu_id")
@@ -43,6 +61,17 @@ func GetMenu(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, menu)
 }
+
+// CreateMenu
+// @Summary Create menu
+// @Description Create a new menu
+// @Tags menus
+// @Produce json
+// @Param menu body model.Menu true "Menu data"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {string} string "Bad Request"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /menus [post]
 func CreateMenu(c echo.Context) error {
 	var menu model.Menu
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -71,6 +100,18 @@ func CreateMenu(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
+
+// UpdateMenu
+// @Summary Update menu
+// @Description Update a menu
+// @Tags menus
+// @Produce json
+// @Param menu_id path string true "Menu ID"
+// @Param menu body model.Menu true "Menu data"
+// @Success 200 {object} object
+// @Failure 400 {string} string "Bad Request"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /menus/{menu_id} [put]
 func UpdateMenu(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

@@ -16,7 +16,15 @@ import (
 )
 
 var tableCollection *mongo.Collection = database.OpenCollection(database.Client, "table")
-
+// GetTables godoc
+// @Summary Get all tables
+// @Description Get all tables from the database
+// @Tags tables
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /tables [get]
 func GetTables(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -35,7 +43,16 @@ func GetTables(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, allTables)
 }
-
+// GetTable godoc
+// @Summary Get a single table
+// @Description Get a single table from the database by its ID
+// @Tags tables
+// @Accept  json
+// @Produce  json
+// @Param table_id path string true "Table ID"
+// @Success 200 {object} model.Table
+// @Failure 500 {object} map[string]interface{}
+// @Router /tables/{table_id} [get]
 func GetTable(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -52,7 +69,17 @@ func GetTable(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, table)
 }
-
+// CreateTable godoc
+// @Summary Create a new table
+// @Description Create a new table in the database
+// @Tags tables
+// @Accept  json
+// @Produce  json
+// @Param table body model.Table true "Table"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /tables [post]
 func CreateTable(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -87,7 +114,18 @@ func CreateTable(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
-
+// UpdateTable godoc
+// @Summary Update an existing table
+// @Description Update an existing table in the database by its ID
+// @Tags tables
+// @Accept  json
+// @Produce  json
+// @Param table_id path string true "Table ID"
+// @Param table body model.Table true "Table"
+// @Success 200 {object} model.UpdateResult
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /tables/{table_id} [put]
 func UpdateTable(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

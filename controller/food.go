@@ -3,12 +3,6 @@ package controller
 import (
 	"context"
 	"fmt"
-	"github.com/go-playground/validator/v10"
-	"github.com/labstack/echo/v4"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"management/database"
 	"management/model"
@@ -16,10 +10,29 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/labstack/echo/v4"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 var validate = validator.New()
+
+// GetFoods
+// @Summary List foods
+// @Description Get all foods
+// @Tags foods
+// @Produce json
+// @Param recordPerPage query int false "Record per page"
+// @Param page query int false "Page number"
+// @Param startIndex query int false "Start index"
+// @Success 200 {array} model.Food
+// @Failure 500 {object} model.ErrorResponse
+// @Router /foods [get]
 
 func GetFoods(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -63,6 +76,16 @@ func GetFoods(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, allFoods[0])
 }
+
+// GetFood
+// @Summary Get food
+// @Description Get a food item by ID
+// @Tags foods
+// @Produce json
+// @Param food_id path string true "Food ID"
+// @Success 200 {object} model.Food
+// @Failure 500 {object} model.ErrorResponse
+// @Router /foods/{food_id} [get]
 func GetFood(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	foodId := c.Param("food_id")
@@ -75,6 +98,17 @@ func GetFood(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, food)
 }
+
+// CreateFood
+// @Summary Create food
+// @Description Create a new food item
+// @Tags foods
+// @Produce json
+// @Param food body model.Food true "Food data"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /foods [post]
 func CreateFood(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	var menu model.Menu
@@ -120,6 +154,18 @@ func toFixed(num float64, precision int) float64 {
 	output := math.Pow(10, float64(precision))
 	return float64(round(num*output)) / output
 }
+
+// UpdateFood
+// @Summary Update food
+// @Description Update a food item
+// @Tags foods
+// @Produce json
+// @Param food_id path string true "Food ID"
+// @Param food body model.Food true "Food data"
+// @Success 200 {object} model.UpdateResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /foods/{food_id} [put]
 func UpdateFood(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

@@ -27,7 +27,14 @@ type InvoiceViewFormat struct {
 }
 
 var invoiceCollection *mongo.Collection = database.OpenCollection(database.Client, "invoice")
-
+// GetInvoices
+// @Summary List invoices
+// @Description Get all invoices
+// @Tags invoices
+// @Produce json
+// @Success 200 {array} model.CustomBsonM
+// @Failure 500 {object} model.ErrorResponse
+// @Router /invoices [get]
 func GetInvoices(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -45,7 +52,15 @@ func GetInvoices(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, allInvoices)
 }
-
+// GetInvoice
+// @Summary Get invoice
+// @Description Get an invoice by ID
+// @Tags invoices
+// @Produce json
+// @Param invoice_id path string true "Invoice ID"
+// @Success 200 {object} controller.InvoiceViewFormat
+// @Failure 500 {object} model.ErrorResponse
+// @Router /invoices/{invoice_id} [get]
 func GetInvoice(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -79,7 +94,16 @@ func GetInvoice(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, invoiceView)
 }
-
+// CreateInvoice
+// @Summary Create invoice
+// @Description Create a new invoice
+// @Tags invoices
+// @Produce json
+// @Param invoice body model.Invoice true "Invoice data"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /invoices [post]
 func CreateInvoice(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -128,7 +152,17 @@ func CreateInvoice(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
-
+// UpdateInvoice
+// @Summary Update invoice
+// @Description Update an invoice
+// @Tags invoices
+// @Produce json
+// @Param invoice_id path string true "Invoice ID"
+// @Param invoice body model.Invoice true "Invoice data"
+// @Success 200 {object} model.UpdateResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /invoices/{invoice_id} [put]
 func UpdateInvoice(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

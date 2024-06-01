@@ -18,7 +18,18 @@ import (
 )
 
 var userCollection *mongo.Collection = database.OpenCollection(database.Client, "user")
-
+// GetUsers godoc
+// @Summary Get all users
+// @Description Get all users from the database with pagination
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param recordPerPage query int false "Records per page"
+// @Param page query int false "Page number"
+// @Param startIndex query int false "Start index"
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /users [get]
 func GetUsers(c echo.Context) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -62,7 +73,16 @@ func GetUsers(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, allUsers[0])
 }
-
+// GetUser godoc
+// @Summary Get a single user
+// @Description Get a single user from the database by their ID
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user_id path string true "User ID"
+// @Success 200 {object} model.User
+// @Failure 500 {object} map[string]interface{}
+// @Router /users/{user_id} [get]
 func GetUser(c echo.Context) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -79,7 +99,17 @@ func GetUser(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, user)
 }
-
+// SignUp godoc
+// @Summary Sign up a new user
+// @Description Create a new user account
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user body model.User true "User"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /users/signup [post]
 func SignUp(c echo.Context) error {
 	fmt.Println("under user sign up")
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
@@ -129,7 +159,17 @@ func SignUp(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
-
+// Login godoc
+// @Summary Login a user
+// @Description Authenticate a user and return tokens
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user body model.User true "User"
+// @Success 200 {object} model.User
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /users/login [post]
 func Login(c echo.Context) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

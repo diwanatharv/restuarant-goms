@@ -1,11 +1,10 @@
 package model
 
 import (
-	 // Load documentation from docs/
-	"time"
-	
-	"github.com/swaggo/swag"
+	// Load documentation from docs/
 	_ "management/docs"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

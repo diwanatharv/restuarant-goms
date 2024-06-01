@@ -20,7 +20,15 @@ type OrderItemPack struct {
 }
 
 var orderItemCollection *mongo.Collection = database.OpenCollection(database.Client, "orderItem")
-
+// GetOrderItems godoc
+// @Summary Get all order items
+// @Description Get all order items from the database
+// @Tags orderItems
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} model.CustomBsonM
+// @Failure 500 {object} map[string]interface{}
+// @Router /orderitems [get]
 func GetOrderItems(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -39,7 +47,16 @@ func GetOrderItems(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, allOrderItems)
 }
-
+// GetOrderItemsByOrder godoc
+// @Summary Get order items by order ID
+// @Description Get order items from the database by order ID
+// @Tags orderItems
+// @Accept  json
+// @Produce  json
+// @Param order_id path string true "Order ID"
+// @Success 200 {array} map[string]interface{}
+// @Failure 500 {object}  map[string]interface{}
+// @Router /orderitems/order/{order_id} [get]
 func GetOrderItemsByOrder(c echo.Context) error {
 	orderId := c.Param("order_id")
 
@@ -117,7 +134,16 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 	return OrderItems, err
 
 }
-
+// GetOrderItem godoc
+// @Summary Get a single order item
+// @Description Get a single order item from the database by its ID
+// @Tags orderItems
+// @Accept  json
+// @Produce  json
+// @Param order_item_id path string true "Order Item ID"
+// @Success 200 {object} model.OrderItem
+// @Failure 500 {object}  map[string]interface{}
+// @Router /orderitems/{order_item_id} [get]
 func GetOrderItem(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -133,7 +159,17 @@ func GetOrderItem(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, orderItem)
 }
-
+// UpdateOrderItem godoc
+// @Summary Update an order item
+// @Description Update an order item in the database by its ID
+// @Tags orderItems
+// @Accept  json
+// @Produce  json
+// @Param order_item_id path string true "Order Item ID"
+// @Param orderItem body model.OrderItem true "Order Item"
+// @Success 200 {object} model.UpdateResult
+// @Failure 500 {object}  map[string]interface{}
+// @Router /orderitems/{order_item_id} [put]
 func UpdateOrderItem(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -184,6 +220,16 @@ func UpdateOrderItem(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
+// CreateOrderItem godoc
+// @Summary Create new order items
+// @Description Create new order items in the database
+// @Tags orderItems
+// @Accept  json
+// @Produce  json
+// @Param orderItemPack body OrderItemPack true "Order Item Pack"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500
 func CreateOrderItem(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()

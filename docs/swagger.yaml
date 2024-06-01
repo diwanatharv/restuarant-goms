@@ -1,4 +1,1088 @@
+basePath: /
+definitions:
+  controller.InvoiceViewFormat:
+    properties:
+      invoice_id:
+        type: string
+      order_details: {}
+      order_id:
+        type: string
+      payment_due: {}
+      payment_due_date:
+        type: string
+      payment_method:
+        type: string
+      payment_status:
+        type: string
+      table_number: {}
+    type: object
+  controller.OrderItemPack:
+    properties:
+      order_items:
+        items:
+          $ref: '#/definitions/model.OrderItem'
+        type: array
+      table_id:
+        type: string
+    type: object
+  model.CustomBsonM:
+    properties:
+      field1:
+        type: string
+      field2:
+        type: string
+    type: object
+  model.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  model.Food:
+    description: Food item details swagger:model
+    properties:
+      created_at:
+        description: Created timestamp of the food item
+        type: string
+      food_id:
+        description: Unique ID of the food item
+        type: string
+      food_image:
+        description: |-
+          Image URL of the food item
+          @swag.Required
+        type: string
+      id:
+        description: |-
+          ID of the food item
+          @swag.Type string
+        type: string
+      menu_id:
+        description: |-
+          ID of the menu associated with the food item
+          @swag.Required
+        type: string
+      name:
+        description: |-
+          Name of the food item
+          @swag.Required
+        maxLength: 100
+        minLength: 2
+        type: string
+      price:
+        description: |-
+          Price of the food item
+          @swag.Required
+        type: number
+      updated_at:
+        description: Updated timestamp of the food item
+        type: string
+    required:
+    - food_image
+    - menu_id
+    - name
+    - price
+    type: object
+  model.InsertOneResult:
+    properties:
+      insertedId:
+        type: string
+    type: object
+  model.Invoice:
+    description: Invoice details swagger:model
+    properties:
+      Payment_due_date:
+        description: Due date for the payment
+        type: string
+      created_at:
+        description: Created timestamp of the invoice
+        type: string
+      id:
+        description: |-
+          ID of the invoice
+          @swag.Type string
+        type: string
+      invoice_id:
+        description: Unique ID of the invoice
+        type: string
+      order_id:
+        description: ID of the associated order
+        type: string
+      payment_method:
+        description: |-
+          Payment method used for the order
+          @swag.Required
+        type: string
+      payment_status:
+        description: |-
+          Payment status of the order
+          @swag.Required
+        type: string
+      updated_at:
+        description: Updated timestamp of the invoice
+        type: string
+    required:
+    - payment_status
+    type: object
+  model.Menu:
+    description: Menu details swagger:model
+    properties:
+      category:
+        description: |-
+          Category of the menu item
+          @swag.Required
+        type: string
+      created_at:
+        description: Created timestamp of the menu item
+        type: string
+      end_date:
+        description: End date of the menu item availability
+        type: string
+      food_id:
+        description: Unique ID of the menu item
+        type: string
+      id:
+        description: |-
+          ID of the menu item
+          @swag.Type string
+        type: string
+      name:
+        description: |-
+          Name of the menu item
+          @swag.Required
+        type: string
+      start_date:
+        description: Start date of the menu item availability
+        type: string
+      updated_at:
+        description: Updated timestamp of the menu item
+        type: string
+    required:
+    - category
+    - name
+    type: object
+  model.Order:
+    description: Order details swagger:model
+    properties:
+      created_at:
+        description: Created timestamp of the order
+        type: string
+      id:
+        description: |-
+          ID of the order
+          @swag.Type string
+        type: string
+      order_date:
+        description: |-
+          Date of the order
+          @swag.Required
+        type: string
+      order_id:
+        description: Unique ID of the order
+        type: string
+      table_id:
+        description: |-
+          ID of the associated table
+          @swag.Required
+        type: string
+      updated_at:
+        description: Updated timestamp of the order
+        type: string
+    required:
+    - order_date
+    - table_id
+    type: object
+  model.OrderItem:
+    description: Order item details swagger:model
+    properties:
+      created_at:
+        description: Created timestamp of the order item
+        type: string
+      food_id:
+        description: |-
+          ID of the associated food item
+          @swag.Required
+        type: string
+      id:
+        description: |-
+          ID of the order item
+          @swag.Type string
+        type: string
+      order_id:
+        description: |-
+          ID of the associated order
+          @swag.Required
+        type: string
+      order_item_id:
+        description: Unique ID of the order item
+        type: string
+      quantity:
+        description: |-
+          Quantity of the order item
+          @swag.Required
+        type: string
+      unit_price:
+        description: |-
+          Unit price of the order item
+          @swag.Required
+        type: number
+      updated_at:
+        description: Updated timestamp of the order item
+        type: string
+    required:
+    - food_id
+    - order_id
+    - quantity
+    - unit_price
+    type: object
+  model.Table:
+    description: Table details swagger:model
+    properties:
+      created_at:
+        description: Created timestamp of the table
+        type: string
+      id:
+        description: |-
+          ID of the table
+          @swag.Type string
+        type: string
+      number_of_guests:
+        description: |-
+          Number of guests allowed at the table
+          @swag.Required
+        type: integer
+      table_id:
+        description: Unique ID of the table
+        type: string
+      table_number:
+        description: |-
+          Table number
+          @swag.Required
+        type: integer
+      updated_at:
+        description: Updated timestamp of the table
+        type: string
+    required:
+    - number_of_guests
+    - table_number
+    type: object
+  model.UpdateResult:
+    properties:
+      matchedCount:
+        type: integer
+      modifiedCount:
+        type: integer
+      upsertedCount:
+        type: integer
+      upsertedId:
+        type: string
+    type: object
+  model.User:
+    description: User details swagger:model
+    properties:
+      Password:
+        description: |-
+          Password of the user
+          @swag.Required
+        minLength: 6
+        type: string
+      avatar:
+        description: Avatar URL of the user
+        type: string
+      created_at:
+        description: Created timestamp of the user
+        type: string
+      email:
+        description: |-
+          Email of the user
+          @swag.Required
+        type: string
+      first_name:
+        description: |-
+          First name of the user
+          @swag.Required
+        maxLength: 100
+        minLength: 2
+        type: string
+      id:
+        description: |-
+          ID of the user
+          @swag.Type string
+        type: string
+      last_name:
+        description: |-
+          Last name of the user
+          @swag.Required
+        maxLength: 100
+        minLength: 2
+        type: string
+      phone:
+        description: |-
+          Phone number of the user
+          @swag.Required
+        type: string
+      refresh_token:
+        description: Refresh token of the user
+        type: string
+      token:
+        description: Authentication token of the user
+        type: string
+      updated_at:
+        description: Updated timestamp of the user
+        type: string
+      user_id:
+        description: Unique ID of the user
+        type: string
+    required:
+    - Password
+    - email
+    - first_name
+    - last_name
+    - phone
+    type: object
+host: localhost:8000
 info:
   contact: {}
-paths: {}
+  description: This is a sample server for a restaurant management system.
+  title: Restaurant Management API
+  version: "1.0"
+paths:
+  /foods:
+    post:
+      description: Create a new food item
+      parameters:
+      - description: Food data
+        in: body
+        name: food
+        required: true
+        schema:
+          $ref: '#/definitions/model.Food'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Create food
+      tags:
+      - foods
+  /foods/{food_id}:
+    get:
+      description: Get a food item by ID
+      parameters:
+      - description: Food ID
+        in: path
+        name: food_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Food'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get food
+      tags:
+      - foods
+    put:
+      description: Update a food item
+      parameters:
+      - description: Food ID
+        in: path
+        name: food_id
+        required: true
+        type: string
+      - description: Food data
+        in: body
+        name: food
+        required: true
+        schema:
+          $ref: '#/definitions/model.Food'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Update food
+      tags:
+      - foods
+  /invoices:
+    get:
+      description: Get all invoices
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CustomBsonM'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: List invoices
+      tags:
+      - invoices
+    post:
+      description: Create a new invoice
+      parameters:
+      - description: Invoice data
+        in: body
+        name: invoice
+        required: true
+        schema:
+          $ref: '#/definitions/model.Invoice'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Create invoice
+      tags:
+      - invoices
+  /invoices/{invoice_id}:
+    get:
+      description: Get an invoice by ID
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: invoice_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.InvoiceViewFormat'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get invoice
+      tags:
+      - invoices
+    put:
+      description: Update an invoice
+      parameters:
+      - description: Invoice ID
+        in: path
+        name: invoice_id
+        required: true
+        type: string
+      - description: Invoice data
+        in: body
+        name: invoice
+        required: true
+        schema:
+          $ref: '#/definitions/model.Invoice'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Update invoice
+      tags:
+      - invoices
+  /menus:
+    get:
+      description: Get all menus
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Menu'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List menus
+      tags:
+      - menus
+    post:
+      description: Create a new menu
+      parameters:
+      - description: Menu data
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/model.Menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create menu
+      tags:
+      - menus
+  /menus/{menu_id}:
+    get:
+      description: Get a menu by ID
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Menu'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get menu
+      tags:
+      - menus
+    put:
+      description: Update a menu
+      parameters:
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: string
+      - description: Menu data
+        in: body
+        name: menu
+        required: true
+        schema:
+          $ref: '#/definitions/model.Menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update menu
+      tags:
+      - menus
+  /orderitems:
+    get:
+      consumes:
+      - application/json
+      description: Get all order items from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CustomBsonM'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all order items
+      tags:
+      - orderItems
+  /orderitems/{order_item_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a single order item from the database by its ID
+      parameters:
+      - description: Order Item ID
+        in: path
+        name: order_item_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OrderItem'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a single order item
+      tags:
+      - orderItems
+    put:
+      consumes:
+      - application/json
+      description: Update an order item in the database by its ID
+      parameters:
+      - description: Order Item ID
+        in: path
+        name: order_item_id
+        required: true
+        type: string
+      - description: Order Item
+        in: body
+        name: orderItem
+        required: true
+        schema:
+          $ref: '#/definitions/model.OrderItem'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an order item
+      tags:
+      - orderItems
+  /orderitems/order/{order_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get order items from the database by order ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get order items by order ID
+      tags:
+      - orderItems
+  /orders:
+    get:
+      description: Get all orders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CustomBsonM'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: List orders
+      tags:
+      - orders
+    post:
+      description: Create a new order
+      parameters:
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Create order
+      tags:
+      - orders
+  /orders/{order_id}:
+    get:
+      description: Get an order by ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Order'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get order
+      tags:
+      - orders
+    put:
+      description: Update an order
+      parameters:
+      - description: Order ID
+        in: path
+        name: order_id
+        required: true
+        type: string
+      - description: Order data
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/model.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Update order
+      tags:
+      - orders
+  /tables:
+    get:
+      consumes:
+      - application/json
+      description: Get all tables from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all tables
+      tags:
+      - tables
+    post:
+      consumes:
+      - application/json
+      description: Create a new table in the database
+      parameters:
+      - description: Table
+        in: body
+        name: table
+        required: true
+        schema:
+          $ref: '#/definitions/model.Table'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new table
+      tags:
+      - tables
+  /tables/{table_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a single table from the database by its ID
+      parameters:
+      - description: Table ID
+        in: path
+        name: table_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Table'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a single table
+      tags:
+      - tables
+    put:
+      consumes:
+      - application/json
+      description: Update an existing table in the database by its ID
+      parameters:
+      - description: Table ID
+        in: path
+        name: table_id
+        required: true
+        type: string
+      - description: Table
+        in: body
+        name: table
+        required: true
+        schema:
+          $ref: '#/definitions/model.Table'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UpdateResult'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing table
+      tags:
+      - tables
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users from the database with pagination
+      parameters:
+      - description: Records per page
+        in: query
+        name: recordPerPage
+        type: integer
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Start index
+        in: query
+        name: startIndex
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all users
+      tags:
+      - users
+  /users/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a single user from the database by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a single user
+      tags:
+      - users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user and return tokens
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login a user
+      tags:
+      - users
+  /users/signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.InsertOneResult'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Sign up a new user
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

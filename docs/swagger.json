@@ -1,7 +1,1514 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is a sample server for a restaurant management system.",
+        "title": "Restaurant Management API",
+        "contact": {},
+        "version": "1.0"
     },
-    "paths": {}
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/foods": {
+            "post": {
+                "description": "Create a new food item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Create food",
+                "parameters": [
+                    {
+                        "description": "Food data",
+                        "name": "food",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/foods/{food_id}": {
+            "get": {
+                "description": "Get a food item by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Get food",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Food ID",
+                        "name": "food_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Food"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a food item",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foods"
+                ],
+                "summary": "Update food",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Food ID",
+                        "name": "food_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Food data",
+                        "name": "food",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices": {
+            "get": {
+                "description": "Get all invoices",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "List invoices",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.CustomBsonM"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new invoice",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Create invoice",
+                "parameters": [
+                    {
+                        "description": "Invoice data",
+                        "name": "invoice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Invoice"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{invoice_id}": {
+            "get": {
+                "description": "Get an invoice by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Get invoice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "invoice_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.InvoiceViewFormat"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an invoice",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invoices"
+                ],
+                "summary": "Update invoice",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "invoice_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Invoice data",
+                        "name": "invoice",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Invoice"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/menus": {
+            "get": {
+                "description": "Get all menus",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "List menus",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Menu"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new menu",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Create menu",
+                "parameters": [
+                    {
+                        "description": "Menu data",
+                        "name": "menu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Menu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/menus/{menu_id}": {
+            "get": {
+                "description": "Get a menu by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Get menu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Menu ID",
+                        "name": "menu_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Menu"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a menu",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "menus"
+                ],
+                "summary": "Update menu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Menu ID",
+                        "name": "menu_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Menu data",
+                        "name": "menu",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Menu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/orderitems": {
+            "get": {
+                "description": "Get all order items from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderItems"
+                ],
+                "summary": "Get all order items",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.CustomBsonM"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orderitems/order/{order_id}": {
+            "get": {
+                "description": "Get order items from the database by order ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderItems"
+                ],
+                "summary": "Get order items by order ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orderitems/{order_item_id}": {
+            "get": {
+                "description": "Get a single order item from the database by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderItems"
+                ],
+                "summary": "Get a single order item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order Item ID",
+                        "name": "order_item_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrderItem"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an order item in the database by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orderItems"
+                ],
+                "summary": "Update an order item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order Item ID",
+                        "name": "order_item_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Order Item",
+                        "name": "orderItem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.OrderItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "description": "Get all orders",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "List orders",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.CustomBsonM"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new order",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Create order",
+                "parameters": [
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{order_id}": {
+            "get": {
+                "description": "Get an order by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Get order",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an order",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "summary": "Update order",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Order ID",
+                        "name": "order_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Order data",
+                        "name": "order",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Order"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tables": {
+            "get": {
+                "description": "Get all tables from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tables"
+                ],
+                "summary": "Get all tables",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new table in the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tables"
+                ],
+                "summary": "Create a new table",
+                "parameters": [
+                    {
+                        "description": "Table",
+                        "name": "table",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Table"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/tables/{table_id}": {
+            "get": {
+                "description": "Get a single table from the database by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tables"
+                ],
+                "summary": "Get a single table",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Table ID",
+                        "name": "table_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Table"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing table in the database by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tables"
+                ],
+                "summary": "Update an existing table",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Table ID",
+                        "name": "table_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Table",
+                        "name": "table",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Table"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Get all users from the database with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Records per page",
+                        "name": "recordPerPage",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Start index",
+                        "name": "startIndex",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Authenticate a user and return tokens",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Login a user",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/users/signup": {
+            "post": {
+                "description": "Create a new user account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Sign up a new user",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.InsertOneResult"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "description": "Get a single user from the database by their ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get a single user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.InvoiceViewFormat": {
+            "type": "object",
+            "properties": {
+                "invoice_id": {
+                    "type": "string"
+                },
+                "order_details": {},
+                "order_id": {
+                    "type": "string"
+                },
+                "payment_due": {},
+                "payment_due_date": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "type": "string"
+                },
+                "payment_status": {
+                    "type": "string"
+                },
+                "table_number": {}
+            }
+        },
+        "controller.OrderItemPack": {
+            "type": "object",
+            "properties": {
+                "order_items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.OrderItem"
+                    }
+                },
+                "table_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CustomBsonM": {
+            "type": "object",
+            "properties": {
+                "field1": {
+                    "type": "string"
+                },
+                "field2": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Food": {
+            "description": "Food item details swagger:model",
+            "type": "object",
+            "required": [
+                "food_image",
+                "menu_id",
+                "name",
+                "price"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Created timestamp of the food item",
+                    "type": "string"
+                },
+                "food_id": {
+                    "description": "Unique ID of the food item",
+                    "type": "string"
+                },
+                "food_image": {
+                    "description": "Image URL of the food item\n@swag.Required",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the food item\n@swag.Type string",
+                    "type": "string"
+                },
+                "menu_id": {
+                    "description": "ID of the menu associated with the food item\n@swag.Required",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the food item\n@swag.Required",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 2
+                },
+                "price": {
+                    "description": "Price of the food item\n@swag.Required",
+                    "type": "number"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the food item",
+                    "type": "string"
+                }
+            }
+        },
+        "model.InsertOneResult": {
+            "type": "object",
+            "properties": {
+                "insertedId": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Invoice": {
+            "description": "Invoice details swagger:model",
+            "type": "object",
+            "required": [
+                "payment_status"
+            ],
+            "properties": {
+                "Payment_due_date": {
+                    "description": "Due date for the payment",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Created timestamp of the invoice",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the invoice\n@swag.Type string",
+                    "type": "string"
+                },
+                "invoice_id": {
+                    "description": "Unique ID of the invoice",
+                    "type": "string"
+                },
+                "order_id": {
+                    "description": "ID of the associated order",
+                    "type": "string"
+                },
+                "payment_method": {
+                    "description": "Payment method used for the order\n@swag.Required",
+                    "type": "string"
+                },
+                "payment_status": {
+                    "description": "Payment status of the order\n@swag.Required",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the invoice",
+                    "type": "string"
+                }
+            }
+        },
+        "model.Menu": {
+            "description": "Menu details swagger:model",
+            "type": "object",
+            "required": [
+                "category",
+                "name"
+            ],
+            "properties": {
+                "category": {
+                    "description": "Category of the menu item\n@swag.Required",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Created timestamp of the menu item",
+                    "type": "string"
+                },
+                "end_date": {
+                    "description": "End date of the menu item availability",
+                    "type": "string"
+                },
+                "food_id": {
+                    "description": "Unique ID of the menu item",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the menu item\n@swag.Type string",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the menu item\n@swag.Required",
+                    "type": "string"
+                },
+                "start_date": {
+                    "description": "Start date of the menu item availability",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the menu item",
+                    "type": "string"
+                }
+            }
+        },
+        "model.Order": {
+            "description": "Order details swagger:model",
+            "type": "object",
+            "required": [
+                "order_date",
+                "table_id"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Created timestamp of the order",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the order\n@swag.Type string",
+                    "type": "string"
+                },
+                "order_date": {
+                    "description": "Date of the order\n@swag.Required",
+                    "type": "string"
+                },
+                "order_id": {
+                    "description": "Unique ID of the order",
+                    "type": "string"
+                },
+                "table_id": {
+                    "description": "ID of the associated table\n@swag.Required",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the order",
+                    "type": "string"
+                }
+            }
+        },
+        "model.OrderItem": {
+            "description": "Order item details swagger:model",
+            "type": "object",
+            "required": [
+                "food_id",
+                "order_id",
+                "quantity",
+                "unit_price"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Created timestamp of the order item",
+                    "type": "string"
+                },
+                "food_id": {
+                    "description": "ID of the associated food item\n@swag.Required",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the order item\n@swag.Type string",
+                    "type": "string"
+                },
+                "order_id": {
+                    "description": "ID of the associated order\n@swag.Required",
+                    "type": "string"
+                },
+                "order_item_id": {
+                    "description": "Unique ID of the order item",
+                    "type": "string"
+                },
+                "quantity": {
+                    "description": "Quantity of the order item\n@swag.Required",
+                    "type": "string"
+                },
+                "unit_price": {
+                    "description": "Unit price of the order item\n@swag.Required",
+                    "type": "number"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the order item",
+                    "type": "string"
+                }
+            }
+        },
+        "model.Table": {
+            "description": "Table details swagger:model",
+            "type": "object",
+            "required": [
+                "number_of_guests",
+                "table_number"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "Created timestamp of the table",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the table\n@swag.Type string",
+                    "type": "string"
+                },
+                "number_of_guests": {
+                    "description": "Number of guests allowed at the table\n@swag.Required",
+                    "type": "integer"
+                },
+                "table_id": {
+                    "description": "Unique ID of the table",
+                    "type": "string"
+                },
+                "table_number": {
+                    "description": "Table number\n@swag.Required",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the table",
+                    "type": "string"
+                }
+            }
+        },
+        "model.UpdateResult": {
+            "type": "object",
+            "properties": {
+                "matchedCount": {
+                    "type": "integer"
+                },
+                "modifiedCount": {
+                    "type": "integer"
+                },
+                "upsertedCount": {
+                    "type": "integer"
+                },
+                "upsertedId": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.User": {
+            "description": "User details swagger:model",
+            "type": "object",
+            "required": [
+                "Password",
+                "email",
+                "first_name",
+                "last_name",
+                "phone"
+            ],
+            "properties": {
+                "Password": {
+                    "description": "Password of the user\n@swag.Required",
+                    "type": "string",
+                    "minLength": 6
+                },
+                "avatar": {
+                    "description": "Avatar URL of the user",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "Created timestamp of the user",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "Email of the user\n@swag.Required",
+                    "type": "string"
+                },
+                "first_name": {
+                    "description": "First name of the user\n@swag.Required",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 2
+                },
+                "id": {
+                    "description": "ID of the user\n@swag.Type string",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "Last name of the user\n@swag.Required",
+                    "type": "string",
+                    "maxLength": 100,
+                    "minLength": 2
+                },
+                "phone": {
+                    "description": "Phone number of the user\n@swag.Required",
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "description": "Refresh token of the user",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "Authentication token of the user",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "Updated timestamp of the user",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "Unique ID of the user",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
 }

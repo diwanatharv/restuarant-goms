@@ -18,7 +18,14 @@ import (
 var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 var orderCollection *mongo.Collection = database.OpenCollection(database.Client, "order")
-
+// GetOrders
+// @Summary List orders
+// @Description Get all orders
+// @Tags orders
+// @Produce json
+// @Success 200 {array} model.CustomBsonM
+// @Failure 500 {object} model.ErrorResponse
+// @Router /orders [get]
 func GetOrders(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -35,7 +42,15 @@ func GetOrders(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, allOrders)
 }
-
+// GetOrder
+// @Summary Get order
+// @Description Get an order by ID
+// @Tags orders
+// @Produce json
+// @Param order_id path string true "Order ID"
+// @Success 200 {object} model.Order
+// @Failure 500 {object} model.ErrorResponse
+// @Router /orders/{order_id} [get]
 func GetOrder(c echo.Context) error {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
@@ -50,7 +65,16 @@ func GetOrder(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, order)
 }
-
+// CreateOrder
+// @Summary Create order
+// @Description Create a new order
+// @Tags orders
+// @Produce json
+// @Param order body model.Order true "Order data"
+// @Success 200 {object} model.InsertOneResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /orders [post]
 func CreateOrder(c echo.Context) error {
 	var table model.Table
 	var order model.Order
@@ -98,7 +122,17 @@ func CreateOrder(c echo.Context) error {
 	defer cancel()
 	return c.JSON(http.StatusOK, result)
 }
-
+// UpdateOrder
+// @Summary Update order
+// @Description Update an order
+// @Tags orders
+// @Produce json
+// @Param order_id path string true "Order ID"
+// @Param order body model.Order true "Order data"
+// @Success 200 {object} model.UpdateResult
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Router /orders/{order_id} [put]
 func UpdateOrder(c echo.Context) error {
 	var table model.Table
 	var order model.Order
